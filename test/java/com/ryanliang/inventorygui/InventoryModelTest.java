@@ -1,14 +1,39 @@
 package com.ryanliang.inventorygui;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class InventoryModelTest {
-	Modellable model = new InventoryModel();
+	private static Modellable model;
+	
+	@BeforeClass
+	public static void DBsetup(){
+		model = new InventoryModel();
+		model.getDBConnection("jdbc:mysql://localhost:3306/media", "root", "asasas");
+	}
+	
+	@Before
+	public void setup(){
+ 
+	}
+	
+	@AfterClass
+	public static void DBtearDown(){
+		model.disconnectFromDatabase();
+		model = null;
+	}
+	
+	@After
+	public void tearDown(){
+ 
+	}
 	
 	@Test
-	public void getItemQuantityTest(){
-		model.getDBConnection("jdbc:mysql://localhost:3306/media", "root", "asasas");
+	public void testGetItemQuantity(){
 		String itemID = model.getID();
 		Media media = new CD(itemID, "star3", "www", "eee", "rrr");	
 		
@@ -18,13 +43,10 @@ public class InventoryModelTest {
 		
 		//Quantity shall be the same as when it was added.
 		Assert.assertEquals(quantity, model.getItemQuantity());
-		
-		model.disconnectFromDatabase();
 	}
 	
 	@Test
-	public void getItemIDTest(){
-		model.getDBConnection("jdbc:mysql://localhost:3306/media", "root", "asasas");
+	public void testGetItemID(){
 		String itemID_a = model.getID();
 		String itemID_b = model.getID();
 		
@@ -41,7 +63,5 @@ public class InventoryModelTest {
 		
 		//ID counter shall increment by 1 when a new item is added.
 		Assert.assertEquals(temp_a, temp_b);
-		
-		model.disconnectFromDatabase();
 	}
 }
