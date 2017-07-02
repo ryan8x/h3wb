@@ -9,6 +9,7 @@ import org.junit.Test;
 
 public class InventoryModelTest {
 	private static Modellable model;
+	private Media media;
 	
 	@BeforeClass
 	public static void DBsetup(){
@@ -29,13 +30,13 @@ public class InventoryModelTest {
 	
 	@After
 	public void tearDown(){
- 
+		media = null;
 	}
 	
 	@Test
 	public void testGetItemQuantity(){
 		String itemID = model.getID();
-		Media media = new CD(itemID, "star3", "www", "eee", "rrr");	
+		media = new CD(itemID, "star3", "www", "eee", "rrr");	
 		
 		String quantity = "321";
 		model.addItem(media, quantity);
@@ -53,7 +54,7 @@ public class InventoryModelTest {
 		//ID counter shall remain the same when no new item is added.
 		Assert.assertEquals(itemID_a, itemID_b);
 		
-		Media media = new CD(itemID_a, "space1", "aa", "vv", "bb");	
+		media = new CD(itemID_a, "space1", "aa", "vv", "bb");	
 		String quantity = "11";
 		model.addItem(media, quantity);
 		itemID_b = model.getID();
