@@ -10,11 +10,14 @@ import org.junit.Test;
 public class InventoryModelTest {
 	private static Modellable model;
 	private Media media;
+	private static String db_URL = "jdbc:mysql://localhost:3306/media";
+	private static String user = "root";
+	private static String password = "asasas";
 	
 	@BeforeClass
 	public static void DBsetup(){
 		model = new InventoryModel();
-		model.getDBConnection("jdbc:mysql://localhost:3306/media", "root", "asasas");
+		model.getDBConnection(db_URL, user, password);
 	}
 	
 	@Before
