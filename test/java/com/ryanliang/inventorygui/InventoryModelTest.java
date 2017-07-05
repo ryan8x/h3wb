@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class InventoryModelTest {
+	private static Viewable view;
 	private static Modellable model;
 	private Media media;
 	private static String db_URL = "jdbc:mysql://localhost:3306/media";
@@ -16,7 +17,9 @@ public class InventoryModelTest {
 	
 	@BeforeClass
 	public static void DBsetup(){
+		view = new InventoryViewDummy();
 		model = new InventoryModel();
+		model.setView(view);
 		model.getDBConnection(db_URL, user, password);
 	}
 	
@@ -29,6 +32,7 @@ public class InventoryModelTest {
 	public static void DBtearDown(){
 		model.disconnectFromDatabase();
 		model = null;
+		view = null;
 	}
 	
 	@After

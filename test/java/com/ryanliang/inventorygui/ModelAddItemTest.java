@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ModelAddItemTest {
+	private static Viewable view;
 	private static Modellable model;
 	private Media media;
 	private static String db_URL = "jdbc:mysql://localhost:3306/media";
@@ -21,8 +22,10 @@ public class ModelAddItemTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		view = new InventoryViewDummy();
 		random = new Random();
 		model = new InventoryModel();
+		model.setView(view);
 		model.getDBConnection(db_URL, user, password);
 	}
 
@@ -30,6 +33,7 @@ public class ModelAddItemTest {
 	public static void tearDownAfterClass() throws Exception {
 		model.disconnectFromDatabase();
 		model = null;
+		view = null;
 		random = null;
 	}
 

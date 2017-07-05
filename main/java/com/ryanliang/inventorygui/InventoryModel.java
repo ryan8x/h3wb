@@ -351,7 +351,7 @@ public class InventoryModel extends AbstractTableModel implements Modellable {
 			
 			if (!query.equals("") && Utility.isNumeric(query)){
 				searchItemHelper(query);
-				//view.update(UpdateType.SEARCH_RESULT);
+				view.update(UpdateType.SEARCH_RESULT);
 			}
 		}
 		else 
@@ -545,7 +545,7 @@ public class InventoryModel extends AbstractTableModel implements Modellable {
 					if (numberOfRows > 0){
 						if (resultSet.getObject(2) != null){
 							itemQuantity = resultSet.getObject(2).toString();
-							//view.update(UpdateType.ITEM_QUANTITY);
+							view.update(UpdateType.ITEM_QUANTITY);
 						}
 					}
 				} catch (SQLException e) {
