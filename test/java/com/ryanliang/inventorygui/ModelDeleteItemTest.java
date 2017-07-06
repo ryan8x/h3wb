@@ -1,9 +1,5 @@
 package com.ryanliang.inventorygui;
 
-import static org.junit.Assert.*;
-
-import java.util.Random;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -11,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ModelAddItemTest {
+public class ModelDeleteItemTest {
 	private static Viewable view;
 	private static Modellable model;
 	private Media [] searchResult;
@@ -19,12 +15,10 @@ public class ModelAddItemTest {
 	private static String db_URL = "jdbc:mysql://localhost:3306/media";
 	private static String user = "root";
 	private static String password = "asasas";
-	private static Random random;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		view = new InventoryViewDummy();
-		random = new Random();
 		model = new InventoryModel();
 		model.setView(view);
 		model.getDBConnection(db_URL, user, password);
@@ -35,7 +29,6 @@ public class ModelAddItemTest {
 		model.disconnectFromDatabase();
 		model = null;
 		view = null;
-		random = null;
 	}
 
 	@Before
@@ -49,25 +42,25 @@ public class ModelAddItemTest {
 	}
 
 	@Test
-	public void testAddItem() {
+	public void testDeleteItem() {
 		String itemID = model.getID();
-		Integer randomNum = random.nextInt();
-		String title = "book" + randomNum.toString(); 
-		media = new Book(itemID, title, "desc1", "gen1", "author1", "isbn");	
+		media = new Book(itemID, "book123", "desc1", "gen1", "author1", "isbn");	
 		
 		String quantity = "1";
 		model.addItem(media, quantity);
+
+		//Check that item is added before deleting it
 		model.searchItem(itemID);
 		searchResult = model.getSearchResult();
-		
 		if (searchResult.length < 1){
 			Assert.fail("Fail to search for the new item after it was added");
 		}
 		else{
-			media = searchResult[0];
+			model.deleteItem(itemID);
+			model.searchItem(itemID);
+			searchResult = model.getSearchResult();
 
-			//Book title shall be the same as when it was added.
-			Assert.assertEquals(title, media.getTitle());
+			Assert.assertTrue("Fail to delete item", searchResult.length < 1);
 		}
 	}
 
