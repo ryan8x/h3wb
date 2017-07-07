@@ -1,7 +1,5 @@
 package com.ryanliang.inventorygui;
 
-import static org.junit.Assert.*;
-
 import java.util.Random;
 
 import org.junit.After;
@@ -66,8 +64,10 @@ public class ModelAddItemTest {
 		else{
 			media = searchResult[0];
 
-			//Book title shall be the same as when it was added.
+			//Book title shall be the same as when it was added.  Note that this also test the SearchItem method.  So testSearchItem unit test is not needed.
 			Assert.assertEquals(title, media.getTitle());
+			
+			//add test for dvd and book as well as check other fields such as desc, genre....
 		}
 	}
 
